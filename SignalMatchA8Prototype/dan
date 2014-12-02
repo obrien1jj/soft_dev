@@ -1,0 +1,28 @@
+#!/usr/bin/python
+import sys
+import os
+import shutil
+
+#remove any pre-existing temp SignalMatcher directory
+if os.path.isdir("/tmp/SignalMatcher"):
+    shutil.rmtree("/tmp/SignalMatcher")
+
+#make temp directories
+os.mkdir("/tmp/SignalMatcher")
+os.mkdir("/tmp/SignalMatcher/D1")
+os.mkdir("/tmp/SignalMatcher/D2")
+
+#make a string of the arguments (other than ./dan)
+arguments = " ".join(sys.argv[1:])
+
+#build the string that's going to be used to call the java program
+system_call = "java -classpath ./bin main.SignalMatcher " + arguments
+
+#run the java program and store whatever the java program returned
+returned = os.system(system_call)
+
+#remove temp files
+shutil.rmtree("/tmp/SignalMatcher")
+
+#exit with the status the java program exited with
+sys.exit(returned)
