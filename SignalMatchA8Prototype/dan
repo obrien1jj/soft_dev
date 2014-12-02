@@ -2,6 +2,8 @@
 import sys
 import os
 import shutil
+import subprocess
+
 
 #remove any pre-existing temp SignalMatcher directory
 if os.path.isdir("/tmp/SignalMatcher"):
@@ -20,6 +22,14 @@ system_call = "java -classpath ./bin main.SignalMatcher " + arguments
 
 #run the java program and store whatever the java program returned
 returned = os.system(system_call)
+
+
+proc = subprocess.Popen(["dan", arguments], stdout=subprocess.PIPE, shell=True)
+(out, err) = proc.communicate()
+print "program output: ", out
+print "program err: ", err
+
+
 
 #remove temp files
 shutil.rmtree("/tmp/SignalMatcher")
